@@ -1,17 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM  from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import { RootRouter } from "Route";
+import { createTheme, CssBaseline, ThemeProvider } from "@material-ui/core";
+import GlobalStyle from "GlobalStyle";
+import { RecoilRoot } from "recoil";
+import { AuthStateListener } from "providers/AuthStateListener";
+import { GlobalAccount } from "providers/GlobalAccount";
+import { ApolloProvider } from "providers/ApolloClient";
+
+const theme = createTheme();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <ApolloProvider>
+          <AuthStateListener>
+            <GlobalAccount>
+              <BrowserRouter>
+                <CssBaseline />
+                <GlobalStyle />
+                <RootRouter />
+              </BrowserRouter>
+            </GlobalAccount>
+          </AuthStateListener>
+        </ApolloProvider>
+      </ThemeProvider>
+    </RecoilRoot>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
